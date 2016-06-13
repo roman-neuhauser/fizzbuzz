@@ -1,0 +1,24 @@
+#!/usr/bin/execlineb -W
+
+# the "ghetto" that coalesced around Dan J. Bernstein's
+# software is fascinating.  i owe quite a bit to people like
+# Jonathan de Boyne Pollard, Paul Jarc or Gerrit Pape.
+
+forx i { 0 1 2 3 4 5 6 7 8 9 }
+  forx j { 1 2 3 4 5 6 7 8 9 10 }
+    multisubstitute {
+      importas i i
+      importas j j
+    }
+    backtick -n n { expr 10 * $i + $j }
+    multisubstitute {
+      define -s quiet "redirfd -w 1 /dev/null"
+      importas n n
+    }
+    ifelse { $quiet expr $n % 15 == 0 }
+      { echo FizzBuzz }
+      ifelse { $quiet expr $n % 3 == 0 }
+        { echo Fizz }
+        ifelse { $quiet expr $n % 5 == 0 }
+          { echo Buzz }
+          echo $n
