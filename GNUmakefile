@@ -22,6 +22,7 @@ impls += cpp/trivial
 impls += cpp/tts
 impls += execline/trivial
 impls += haskell/trivial
+impls += nim/trivial
 impls += perl5/trivial
 impls += perl6/given
 impls += perl6/trivial
@@ -40,6 +41,9 @@ c/strlcat: LDLIBS = -lbsd
 
 $(filter haskell/%,$(impls)): %: %.hs
 	ghc $<
+
+$(filter nim/%,$(impls)): %: %.nim
+	nim --verbosity:0 compile $<
 
 $(filter execline/%,$(impls)): %: %.xl
 	$(call mkexe)

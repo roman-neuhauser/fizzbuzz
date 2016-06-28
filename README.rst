@@ -46,6 +46,11 @@ Haskell
 
 Expects ghc, tested using 8.0.1.
 
+Nim
+***
+
+Tested using `Nim Compiler Version 0.14.0 (2016-06-08) [Linux: amd64]`.
+
 Perl5
 *****
 

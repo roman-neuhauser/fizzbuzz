@@ -27,6 +27,10 @@
 /execline/trivial.t
 /haskell/trivial
 /haskell/trivial.t
+/nimcache/
+/nim/nimcache/
+/nim/trivial
+/nim/trivial.t
 /perl5/trivial
 /perl5/trivial.t
 /perl6/given
