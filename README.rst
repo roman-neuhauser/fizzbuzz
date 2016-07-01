@@ -75,3 +75,20 @@ Zsh
 ***
 
 I can care about versions older than 5.0.6 if you pay me. :)
+
+
+License
+=======
+
+|licico|_
+
+This work is licensed under a
+`Creative Commons Attribution-ShareAlike 4.0 International License`__.
+
+.. __:
+  http://creativecommons.org/licenses/by-sa/4.0/
+
+.. _licico: http://creativecommons.org/licenses/by-sa/4.0/
+
+.. |licico| image:: https://i.creativecommons.org/l/by-sa/4.0/88x31.png
+            :alt:   Creative Commons License
