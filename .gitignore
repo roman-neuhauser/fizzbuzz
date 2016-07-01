@@ -39,6 +39,12 @@
 /perl6/trivial.t
 /python/trivial
 /python/trivial.t
+/ruby/case
+/ruby/case.t
+/ruby/monkey
+/ruby/monkey.t
+/ruby/trivial
+/ruby/trivial.t
 /zsh/patmat
 /zsh/patmat.t
 /zsh/trivial

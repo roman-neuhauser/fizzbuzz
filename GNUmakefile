@@ -27,6 +27,9 @@ impls += perl5/trivial
 impls += perl6/given
 impls += perl6/trivial
 impls += python/trivial
+impls += ruby/case
+impls += ruby/monkey
+impls += ruby/trivial
 impls += zsh/patmat
 impls += zsh/trivial
 
@@ -55,6 +58,9 @@ $(filter perl6/%,$(impls)): %: %.pl
 	$(call mkexe)
 
 $(filter python/%,$(impls)): %: %.py
+	$(call mkexe)
+
+$(filter ruby/%,$(impls)): %: %.rb
 	$(call mkexe)
 
 $(filter zsh/%,$(impls)): %: %.zsh
