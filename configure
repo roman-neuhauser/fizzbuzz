@@ -1,0 +1,161 @@
+#!/bin/sh
+# vim: et sts=2 sw=2 ts=8 fdm=marker cms=\ #\ %s
+
+set -o errexit
+set -o nounset
+
+populate() # {{{
+{
+  sed \
+    -e "s@CRAM@$CRAMg" \
+    -e "s@CRAMFLAGS@$CRAMFLAGSg" \
+    \
+    -e "s@RST2HTML@$RST2HTMLg" \
+    -e "s@RST2HTMLFLAGS@$RST2HTMLFLAGSg" \
+    \
+    -e "s@CC@$CCg" \
+    -e "s@CFLAGS@$CFLAGSg" \
+    -e "s@CPPFLAGS@$CPPFLAGSg" \
+    -e "s@CXX@$CXXg" \
+    -e "s@CXXFLAGS@$CXXFLAGSg" \
+    \
+    -e "s@EXECLINEB@$EXECLINEBg" \
+    \
+    -e "s@GHC@$GHCg" \
+    -e "s@GHCFLAGS@$GHCFLAGSg" \
+    \
+    -e "s@NIM@$NIMg" \
+    -e "s@NIMFLAGS@$NIMFLAGSg" \
+    \
+    -e "s@PERL5@$PERL5g" \
+    -e "s@PERL6@$PERL6g" \
+    -e "s@PHP@$PHPg" \
+    -e "s@PYTHON@$PYTHONg" \
+    -e "s@RUBY@$RUBYg" \
+    -e "s@ZSH@$ZSHg" \
+    $1 \
+  > $2
+  report "created file" $2
+} # }}}
+
+testfor() # {{{
+{
+  local mode=$1; shift
+  local lang="$1"
+  local var="$2"
+  local cmd="$3"
+  if test $help_requested -ne 0; then
+    printf "$lang:\n"
+    if test "$mode" = lang; then
+      local lc=$(echo "$lang" | tr '[A-Z]' '[a-z]')
+      printf "  use --without-%s to avoid the %s implementation(s)\n" \
+        "$lc" "$lang"
+    fi
+    printf "  use %s=<executable> to override the default (%s)\n\n" \
+      "$var" "$cmd"
+    return
+  fi
+
+  local what=$(echo "$lang" | tr + x | tr '[A-Z]' '[a-z]')
+  eval "local avoid=\${avoid_$what-}"
+
+  if test 0 -ne "${avoid:-0}"; then
+    eval "$var="
+    report $lang excluded by request
+    return
+  fi
+
+  local val=
+  eval "val=\${$var-}"
+  local curval="${val:-$cmd}"
+  if test -z "$val"; then
+    val="$cmd"
+  fi
+  if test "${val#/}" = "$val"; then
+    val=$(which $val 2>/dev/null || :)
+    eval "$var="'"$val"'
+  fi
+  if test -z "$val"; then
+    report $lang not found: ${curval:-$cmd}
+    return
+  elif ! test -x "$val"; then
+    report $lang not executable: $val
+    return
+  fi
+  report $lang $val
+} # }}}
+
+report() # {{{
+{
+  printf "%-13s:" "$1"
+  shift
+  printf " %s" "$@"
+  printf "\n"
+} # }}}
+
+CRAMFLAGS=
+RST2HTMLFLAGS="--strict"
+
+CFLAGS="-Wall -Wextra"
+CXXFLAGS="-Wall -Wextra -std=c++14"
+CPPFLAGS="-D_ISOC99_SOURCE"
+NIMFLAGS="--warnings:on"
+GHCFLAGS=
+
+help_requested=0
+
+for a in "$@"; do # {{{
+  case $a in
+  -h|--help)
+    help_requested=1
+    break
+  ;;
+  --without-*)
+    what=${a#--without-}
+    what=$(echo "$what" | tr + x)
+    eval avoid_$what=1
+  ;;
+  -*)
+    echo >&2 "error: unknown option '$a'"
+    exit 1
+  ;;
+  ?*=*)
+    var="${a%%=*}"
+    val="${a#*=}"
+    eval "$var="'"$val"'
+  ;;
+  esac
+done # }}}
+
+testfor tool Cram     CRAM      cram
+testfor tool rst2html RST2HTML  rst2html5
+
+testfor lang C        CC        cc
+testfor lang C++      CXX       c++
+testfor lang Execline EXECLINEB execlineb
+testfor lang Haskell  GHC       ghc
+testfor lang Nim      NIM       nim
+testfor lang Perl5    PERL5     perl
+testfor lang Perl6    PERL6     perl6
+testfor lang PHP      PHP       php
+testfor lang Python   PYTHON    python
+testfor lang Ruby     RUBY      ruby
+testfor lang Zsh      ZSH       zsh
+
+test $help_requested -eq 0 || exit
+
+echo
+
+populate GNUmakefile.in GNUmakefile
+
+cat <<-EOF
+
+to build the programs from their sources:
+
+  make
+
+to test their correctness:
+
+  make check
+
+EOF

@@ -1,4 +1,5 @@
 *.err
+/GNUmakefile
 /README.html
 /haskell/*.hi
 /c/piecemeal

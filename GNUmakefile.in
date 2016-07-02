@@ -1,14 +1,30 @@
-CFLAGS = -Wall -Wextra
-CXXFLAGS = -Wall -Wextra -std=c++14
-CPPFLAGS = -D_ISOC99_SOURCE
+CC        = @CC@
+CXX       = @CXX@
+EXECLINEB = @EXECLINEB@
+GHC       = @GHC@
+NIM       = @NIM@
+PERL5     = @PERL5@
+PERL6     = @PERL6@
+PHP       = @PHP@
+PYTHON    = @PYTHON@
+RUBY      = @RUBY@
+ZSH       = @ZSH@
 
-CRAM = cram
-CRAMFLAGS =
+CFLAGS = @CFLAGS@
+CXXFLAGS = @CXXFLAGS@
+CPPFLAGS = @CPPFLAGS@
 
-RST2HTML = rst2html5
-RST2HTMLFLAGS = --strict
+NIMFLAGS = @NIMFLAGS@
+
+CRAM = @CRAM@
+CRAMFLAGS = @CRAMFLAGS@
+
+RST2HTML = @RST2HTML@
+RST2HTMLFLAGS = @RST2HTMLFLAGS@
 
 impls  =
+
+ifdef CC
 impls += c/piecemeal
 impls += c/snprintf
 impls += c/strlcat
@@ -16,23 +32,54 @@ impls += c/tblrot
 impls += c/tblrot2
 impls += c/ternaries
 impls += c/trivial
+endif
+
+ifdef CXX
 impls += cpp/fun
 impls += cpp/irange
 impls += cpp/trivial
 impls += cpp/tts
+endif
+
+ifdef EXECLINEB
 impls += execline/trivial
+endif
+
+ifdef GHC
 impls += haskell/trivial
+endif
+
+ifdef NIM
 impls += nim/trivial
+endif
+
+ifdef PERL5
 impls += perl5/trivial
+endif
+
+ifdef PERL6
 impls += perl6/given
 impls += perl6/trivial
+endif
+
+ifdef PHP
 impls += php/trivial
+endif
+
+ifdef PYTHON
 impls += python/trivial
+endif
+
+ifdef RUBY
 impls += ruby/case
 impls += ruby/monkey
 impls += ruby/trivial
+endif
+
+ifdef ZSH
 impls += zsh/patmat
 impls += zsh/trivial
+endif
 
 crud   =
 crud  += */*.o
@@ -44,34 +91,36 @@ all: $(impls)
 c/strlcat: LDLIBS = -lbsd
 
 $(filter haskell/%,$(impls)): %: %.hs
-	ghc $<
+	$(GHC) $(GHCFLAGS) $<
 
 $(filter nim/%,$(impls)): %: %.nim
-	nim --verbosity:0 compile $<
+	$(NIM) $(NIMFLAGS) compile $<
 
 $(filter execline/%,$(impls)): %: %.xl
-	$(call mkexe)
+	$(call mkexe,$(EXECLINEB))
 
 $(filter perl5/%,$(impls)): %: %.pl
-	$(call mkexe)
+	$(call mkexe,$(PERL5))
 
 $(filter perl6/%,$(impls)): %: %.pl
-	$(call mkexe)
+	$(call mkexe,$(PERL6))
 
 $(filter php/%,$(impls)): %: %.php
-	$(call mkexe)
+	$(call mkexe,$(PHP))
 
 $(filter python/%,$(impls)): %: %.py
-	$(call mkexe)
+	$(call mkexe,$(PYTHON))
 
 $(filter ruby/%,$(impls)): %: %.rb
-	$(call mkexe)
+	$(call mkexe,$(RUBY))
 
 $(filter zsh/%,$(impls)): %: %.zsh
-	$(call mkexe)
+	$(call mkexe,$(ZSH))
 
 define mkexe
-	install -m 0755 $< $@
+  sed -e '1s@!#[^[:space:]]*@!#$1@' < $< > $@.tmp
+	install -m 0755 $@.tmp $@
+	$(RM) $@.tmp
 endef
 
 .PHONY: html
