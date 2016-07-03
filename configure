@@ -20,6 +20,9 @@ populate() # {{{
     -e "s@CXX@$CXXg" \
     -e "s@CXXFLAGS@$CXXFLAGSg" \
     \
+    -e "s@LDFLAGS@$LDFLAGSg" \
+    -e "s@LDLIBS@$LDLIBSg" \
+    \
     -e "s@EXECLINEB@$EXECLINEBg" \
     \
     -e "s@GHC@$GHCg" \
@@ -103,6 +106,8 @@ CXXFLAGS="-Wall -Wextra -std=c++14"
 CPPFLAGS="-D_ISOC99_SOURCE"
 NIMFLAGS="--warnings:on"
 GHCFLAGS=
+LDFLAGS=
+LDLIBS=
 
 help_requested=0
 
@@ -147,6 +152,11 @@ test $help_requested -eq 0 || exit
 
 echo
 
+populate $rootdir/build-c.sh build-c
+populate $rootdir/build-cpp.sh build-cpp
+populate $rootdir/build-hs.sh build-hs
+populate $rootdir/build-nim.sh build-nim
+populate $rootdir/mkexe.sh mkexe
 populate $rootdir/GNUmakefile.in GNUmakefile
 
 cat <<-EOF
