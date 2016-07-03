@@ -4,9 +4,12 @@
 set -o errexit
 set -o nounset
 
+rootdir=$(dirname $(realpath $0))
+
 populate() # {{{
 {
   sed \
+    -e "s@VPATH@$VPATHg" \
     -e "s@CRAM@$CRAMg" \
     -e "s@CRAMFLAGS@$CRAMFLAGSg" \
     \
@@ -93,6 +96,8 @@ report() # {{{
   printf "\n"
 } # }}}
 
+VPATH="$rootdir"
+
 CRAMFLAGS=
 RST2HTMLFLAGS="--strict"
 
@@ -146,7 +151,7 @@ test $help_requested -eq 0 || exit
 
 echo
 
-populate GNUmakefile.in GNUmakefile
+populate $rootdir/GNUmakefile.in GNUmakefile
 
 cat <<-EOF
 

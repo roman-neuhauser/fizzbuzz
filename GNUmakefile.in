@@ -22,6 +22,8 @@ CRAMFLAGS = @CRAMFLAGS@
 RST2HTML = @RST2HTML@
 RST2HTMLFLAGS = @RST2HTMLFLAGS@
 
+VPATH = @VPATH@
+
 impls  =
 
 ifdef CC
@@ -90,32 +92,53 @@ all: $(impls)
 
 c/strlcat: LDLIBS = -lbsd
 
+$(filter c/%,$(impls)): %: %.c
+	$(call mkdir,$@)
+	$(CC) $(CFLAGS) $(CPPFLAGS) $^ $(LDLIBS) -o $@
+
+$(filter cpp/%,$(impls)): %: %.cpp
+	$(call mkdir,$@)
+	$(CXX) $(CXXFLAGS) $(CPPFLAGS) $^ $(LDLIBS) -o $@
+
 $(filter haskell/%,$(impls)): %: %.hs
-	$(GHC) $(GHCFLAGS) $<
+	$(call mkdir,$@)
+	$(GHC) -outputdir $(dir $@) -o $@ $(GHCFLAGS) $<
 
 $(filter nim/%,$(impls)): %: %.nim
-	$(NIM) $(NIMFLAGS) compile $<
+	$(call mkdir,$@)
+	$(NIM) compile --nimcache:$(dir $@)/nimcache --out:$@ $(NIMFLAGS) $<
 
 $(filter execline/%,$(impls)): %: %.xl
+	$(call mkdir,$@)
 	$(call mkexe,$(EXECLINEB))
 
 $(filter perl5/%,$(impls)): %: %.pl
+	$(call mkdir,$@)
 	$(call mkexe,$(PERL5))
 
 $(filter perl6/%,$(impls)): %: %.pl
+	$(call mkdir,$@)
 	$(call mkexe,$(PERL6))
 
 $(filter php/%,$(impls)): %: %.php
+	$(call mkdir,$@)
 	$(call mkexe,$(PHP))
 
 $(filter python/%,$(impls)): %: %.py
+	$(call mkdir,$@)
 	$(call mkexe,$(PYTHON))
 
 $(filter ruby/%,$(impls)): %: %.rb
+	$(call mkdir,$@)
 	$(call mkexe,$(RUBY))
 
 $(filter zsh/%,$(impls)): %: %.zsh
+	$(call mkdir,$@)
 	$(call mkexe,$(ZSH))
+
+define mkdir
+	@mkdir -p $(dir $1)
+endef
 
 define mkexe
   sed -e '1s@!#[^[:space:]]*@!#$1@' < $< > $@.tmp
@@ -136,8 +159,8 @@ clean:
 
 tests = $(patsubst %,%.t,$(impls))
 
-$(tests): %:
-	install t/happy-path.tpl $@
+$(tests): %: t/happy-path.tpl
+	install $< $@
 
 .PHONY: tests
 tests: $(tests)
