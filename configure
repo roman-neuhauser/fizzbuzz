@@ -10,8 +10,6 @@ populate() # {{{
 {
   sed \
     -e "s@VPATH@$VPATHg" \
-    -e "s@CRAM@$CRAMg" \
-    -e "s@CRAMFLAGS@$CRAMFLAGSg" \
     \
     -e "s@RST2HTML@$RST2HTMLg" \
     -e "s@RST2HTMLFLAGS@$RST2HTMLFLAGSg" \
@@ -98,7 +96,6 @@ report() # {{{
 
 VPATH="$rootdir"
 
-CRAMFLAGS=
 RST2HTMLFLAGS="--strict"
 
 CFLAGS="-Wall -Wextra"
@@ -132,7 +129,6 @@ for a in "$@"; do # {{{
   esac
 done # }}}
 
-testfor tool Cram     CRAM      cram
 testfor tool rst2html RST2HTML  rst2html5
 
 testfor lang C        CC        cc

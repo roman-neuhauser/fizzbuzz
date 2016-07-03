@@ -16,9 +16,6 @@ CPPFLAGS = @CPPFLAGS@
 
 NIMFLAGS = @NIMFLAGS@
 
-CRAM = @CRAM@
-CRAMFLAGS = @CRAMFLAGS@
-
 RST2HTML = @RST2HTML@
 RST2HTMLFLAGS = @RST2HTMLFLAGS@
 
@@ -154,18 +151,9 @@ README.html: README.rst
 
 .PHONY: clean
 clean:
-	$(RM) $(impls) $(crud) $(tests) $(patsubst %,%.err,$(tests))
-
-
-tests = $(patsubst %,%.t,$(impls))
-
-$(tests): %: t/happy-path.tpl
-	install $< $@
-
-.PHONY: tests
-tests: $(tests)
+	$(RM) $(impls) $(crud) $(patsubst %,%.diff,$(impls)) $(patsubst %,%.output,$(impls))
 
 
 .PHONY: check
-check: $(impls) $(tests)
-	env -i TESTROOT="$$PWD" PATH="$$PATH" $(CRAM) $(CRAMFLAGS) $(tests)
+check: run-tests.sh expected-output $(impls)
+	sh $^

@@ -18,15 +18,14 @@ You'll need a GNU/Linux system to compile and run these programs.
 I write and test them in ArchLinux.  Build everything that needs it
 with::
 
+  % ./configure
   % make
 
-Run the tests (requires Cram_)::
+Run the tests::
 
   % make check
 
 GNU make required.
-
-.. _Cram: https://bitheap.org/cram/
 
 C
 *
