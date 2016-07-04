@@ -9,6 +9,8 @@ rootdir=$(dirname $(realpath $0))
 populate() # {{{
 {
   sed \
+    -e "s@GMAKE@$GMAKEg" \
+    -e "s@MAKE@$MAKEg" \
     -e "s@VPATH@$VPATHg" \
     \
     -e "s@RST2HTML@$RST2HTMLg" \
@@ -19,6 +21,8 @@ populate() # {{{
     -e "s@CPPFLAGS@$CPPFLAGSg" \
     -e "s@CXX@$CXXg" \
     -e "s@CXXFLAGS@$CXXFLAGSg" \
+    \
+    -e "s@HAVE_BSD_STRING_H@$HAVE_BSD_STRING_Hg" \
     \
     -e "s@LDFLAGS@$LDFLAGSg" \
     -e "s@LDLIBS@$LDLIBSg" \
@@ -109,6 +113,36 @@ GHCFLAGS=
 LDFLAGS=
 LDLIBS=
 
+HAVE_BSD_STRING_H=
+
+for d in /usr/local/include /usr/include; do
+  if test -e $d/bsd/string.h; then
+    HAVE_BSD_STRING_H=1
+    CPPFLAGS="$CPPFLAGS -I$d -DHAVE_BSD_STRING_H"
+  fi
+done
+
+for d in /usr/local/include /usr/include; do
+  if test -e $d/boost/range/irange.hpp; then
+    CPPFLAGS="$CPPFLAGS -I$d"
+  fi
+done
+
+case "$(uname -s)" in
+Linux)
+  MAKE=make
+  GMAKE=$MAKE
+;;
+DragonFly|*BSD)
+  MAKE=make
+  GMAKE=gmake
+;;
+*)
+  MAKE=gmake
+  GMAKE=$MAKE
+;;
+esac
+
 help_requested=0
 
 for a in "$@"; do # {{{
@@ -159,14 +193,22 @@ populate $rootdir/build-nim.sh build-nim
 populate $rootdir/mkexe.sh mkexe
 populate $rootdir/GNUmakefile.in GNUmakefile
 
-cat <<-EOF
+if test "$MAKE" != "$GMAKE"; then
+  case "$(uname -s)" in
+  DragonFly|*BSD)
+    populate $rootdir/Makefile.in Makefile
+  ;;
+  esac
+fi
+
+cat <<EOF
 
 to build the programs from their sources:
 
-  make
+  $MAKE
 
 to test their correctness:
 
-  make check
+  $MAKE check
 
 EOF

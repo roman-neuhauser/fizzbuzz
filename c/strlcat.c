@@ -2,7 +2,11 @@
 // better than c/snprintf.c, isn't it?
 
 #include <stdio.h>
-#include <bsd/string.h>
+#ifdef HAVE_BSD_STRING_H
+# include <bsd/string.h>
+#else
+# include <string.h>
+#endif
 
 int
 main(void)

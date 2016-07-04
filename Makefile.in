@@ -1,0 +1,2 @@
+all .DEFAULT:
+	@@GMAKE@ --no-print-directory "$@"

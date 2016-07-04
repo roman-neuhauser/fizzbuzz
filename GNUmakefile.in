@@ -19,6 +19,8 @@ NIMFLAGS = @NIMFLAGS@
 RST2HTML = @RST2HTML@
 RST2HTMLFLAGS = @RST2HTMLFLAGS@
 
+HAVE_BSD_STRING_H = @HAVE_BSD_STRING_H@
+
 VPATH = @VPATH@
 
 impls  =
@@ -87,7 +89,9 @@ crud  += haskell/*.hi
 .PHONY: all
 all: $(impls)
 
+ifdef HAVE_BSD_STRING_H
 c/strlcat: LDLIBS = -lbsd
+endif
 
 .EXPORT_ALL_VARIABLES:
 
