@@ -14,12 +14,13 @@ the top commenting on some angle of the implementation.
 Requirements
 ============
 
-You'll need a GNU/Linux system to compile and run these programs.
-I write and test them in ArchLinux.  Build everything that needs it
-with::
+You'll need a BSD or GNU/Linux system to compile and run these programs.
+I test them mostly in ArchLinux.  Build everything that needs it with::
 
-  % ./configure
+  % ./configure [arguments]
   % make
+
+See `./configure --help` for some of the available knobs.
 
 Run the tests::
 
@@ -30,50 +31,69 @@ GNU make required.
 C
 *
 
-Targets C99, tested using gcc-6.1.1.
+Targets C99, tested using gcc-5.x, gcc-6.x, clang 3.4.x, clang-3.8.x
+on ArchLinux, DragonFlyBSD, and FreeBSD.
 
 C++
 ***
 
-Targets C++14, tested using gcc-6.1.1.
+Targets C++14, see above for compilers.
+
 Some implementations require parts of Boost_.
 
 .. _Boost: https://www.boost.org/
 
+To build these on FreeBSD, make sure to have gcc6 installed::
+
+  % test -x /usr/local/bin/c++6 || sudo pkg install gcc6
+
+And configure the build system for it::
+
+  % ./configure CXX=/usr/local/bin/c++6 LDFLAGS=-Wl,-rpath=/usr/local/lib/gcc6
+
 Haskell
 *******
 
-Expects ghc, tested using 8.0.1.
+Expects ghc, tested using 8.x.
 
 Nim
 ***
 
-Tested using `Nim Compiler Version 0.14.0 (2016-06-08) [Linux: amd64]`.
+Works for me in Nim 0.11.x and 0.14.x.
 
 Perl5
 *****
 
-Perl 5.24 or later.
+Works for me using Perl 5.24 or later.
 
 Perl6
 *****
 
-::
+Works for me in this or newer::
 
   % perl6 --version
   This is Rakudo version 2016.05 built on MoarVM version 2016.05
   implementing Perl 6.c.
 
+PHP
+***
+
+Requires PHP 5.3 or later.
+
 Python
 ******
 
-The example is trivial and will work in any Python version you could
-put your hands on nowadays.  But really: Python >= 3.4 or GTFO.  
+Works for me in CPython 3.5.
+
+Ruby
+****
+
+Works for me in mruby 2.3.x.
 
 Zsh
 ***
 
-I can care about versions older than 5.0.6 if you pay me. :)
+Works for me in Zsh 5.2.
 
 
 License
