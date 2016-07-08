@@ -86,6 +86,15 @@ crud   =
 crud  += */*.o
 crud  += haskell/*.hi
 
+configured   =
+configured  += GNUmakefile
+configured  += Makefile
+configured  += build-c
+configured  += build-cpp
+configured  += build-hs
+configured  += build-nim
+configured  += mkexe
+
 .PHONY: all
 all: $(impls)
 
@@ -139,11 +148,14 @@ README.html: README.rst
 
 .PHONY: clean
 clean:
-	$(RM) $(impls) $(crud)
+	$(RM) $(impls) $(crud) README.html
 	$(RM) $(patsubst %,%.compiler,$(impls))
 	$(RM) $(patsubst %,%.diff,$(impls))
 	$(RM) $(patsubst %,%.output,$(impls))
 
+.PHONY: realclean
+realclean: clean
+	$(RM) $(configured)
 
 .PHONY: check
 check: run-tests.sh expected-output $(impls)
