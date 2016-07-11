@@ -2,6 +2,7 @@ CC        = @CC@
 CXX       = @CXX@
 EXECLINEB = @EXECLINEB@
 GHC       = @GHC@
+LSC       = @LSC@
 NIM       = @NIM@
 PERL5     = @PERL5@
 PERL6     = @PERL6@
@@ -42,6 +43,11 @@ endif
 
 ifdef GHC
 impls += haskell/trivial
+endif
+
+ifdef LSC
+impls += livescript/trivial
+impls += livescript/pipeline
 endif
 
 ifdef NIM
@@ -114,6 +120,9 @@ $(filter nim/%,$(impls)): %: build-nim %.nim
 
 $(filter execline/%,$(impls)): %: mkexe %.xl
 	sh $^ $@ $(EXECLINEB)
+
+$(filter livescript/%,$(impls)): %: build-ls %.ls
+	sh $^ $@
 
 $(filter perl5/%,$(impls)): %: mkexe %.pl
 	sh $^ $@ $(PERL5)

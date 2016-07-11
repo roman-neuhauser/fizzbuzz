@@ -35,6 +35,12 @@ populate() # {{{
     -e "s@NIM@$NIMg" \
     -e "s@NIMFLAGS@$NIMFLAGSg" \
     \
+    -e "s@LSC@$LSCg" \
+    -e "s@LSCFLAGS@$LSCFLAGSg" \
+    \
+    -e "s@NODEJS@$NODEJSg" \
+    -e "s@NODEJSFLAGS@$NODEJSFLAGSg" \
+    \
     -e "s@PERL5@$PERL5g" \
     -e "s@PERL6@$PERL6g" \
     -e "s@PHP@$PHPg" \
@@ -64,7 +70,7 @@ testfor() # {{{
     return
   fi
 
-  local what=$(echo "$lang" | tr + x | tr '[A-Z]' '[a-z]')
+  local what=$(echo "$lang" | tr +. x_ | tr '[A-Z]' '[a-z]')
   eval "local avoid=\${avoid_$what-}"
 
   if test 0 -ne "${avoid:-0}"; then
@@ -110,6 +116,8 @@ CXXFLAGS="-Wall -Wextra -std=c++14"
 CPPFLAGS="-D_ISOC99_SOURCE"
 NIMFLAGS="--warnings:on"
 GHCFLAGS=
+LSCFLAGS=
+NODEJSFLAGS=
 LDFLAGS=
 LDLIBS=
 
@@ -153,7 +161,7 @@ for a in "$@"; do # {{{
   ;;
   --without-*)
     what=${a#--without-}
-    what=$(echo "$what" | tr + x)
+    what=$(echo "$what" | tr +. x_)
     eval avoid_$what=1
   ;;
   -*)
@@ -174,7 +182,9 @@ testfor lang C        CC        cc
 testfor lang C++      CXX       c++
 testfor lang Execline EXECLINEB execlineb
 testfor lang Haskell  GHC       ghc
+testfor lang LiveScript LSC     lsc
 testfor lang Nim      NIM       nim
+testfor lang Node.js  NODEJS    node
 testfor lang Perl5    PERL5     perl
 testfor lang Perl6    PERL6     perl6
 testfor lang PHP      PHP       php
@@ -189,6 +199,7 @@ echo
 populate $rootdir/build-c.sh build-c
 populate $rootdir/build-cpp.sh build-cpp
 populate $rootdir/build-hs.sh build-hs
+populate $rootdir/build-ls.sh build-ls
 populate $rootdir/build-nim.sh build-nim
 populate $rootdir/mkexe.sh mkexe
 populate $rootdir/GNUmakefile.in GNUmakefile

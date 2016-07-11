@@ -56,6 +56,11 @@ Haskell
 
 Expects ghc, tested using 8.x.
 
+LiveScript
+**********
+
+Tested with livescript-1.5.x or newer and node-6.3.0 or newer.
+
 Nim
 ***
 
