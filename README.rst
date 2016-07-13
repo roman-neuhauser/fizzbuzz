@@ -14,19 +14,23 @@ the top commenting on some angle of the implementation.
 Requirements
 ============
 
-You'll need a BSD or GNU/Linux system to compile and run these programs.
-I test them mostly in ArchLinux.  Build everything that needs it with::
+You'll need a BSD or GNU/Linux system with GNU make plus compilers and
+interpreters for any implementations you want to run.  Implementations
+for which no compiler or interpreter is found will be skipped.
+
+Create makefiles and auxiliary build scripts::
 
   % ./configure [arguments]
-  % make
 
 See `./configure --help` for some of the available knobs.
+
+Transform the various sources into executable code::
+
+  % make
 
 Run the tests::
 
   % make check
-
-GNU make required.
 
 C
 *
