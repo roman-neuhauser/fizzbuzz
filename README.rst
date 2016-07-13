@@ -11,6 +11,8 @@ This is a collection of my takes on the FizzBuzz programming excercise.
 Each implementation is confined to a single file with a short note at
 the top commenting on some angle of the implementation.
 
+.. contents::
+
 Requirements
 ============
 
