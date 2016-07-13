@@ -62,7 +62,7 @@ testfor() # {{{
     printf "$lang:\n"
     if test "$mode" = lang; then
       local lc=$(echo "$lang" | tr '[A-Z]' '[a-z]')
-      printf "  use --without-%s to avoid the %s implementation(s)\n" \
+      printf "  use --disable-%s to avoid the %s implementation(s)\n" \
         "$lc" "$lang"
     fi
     printf "  use %s=<executable> to override the default (%s)\n\n" \
@@ -159,8 +159,8 @@ for a in "$@"; do # {{{
     help_requested=1
     break
   ;;
-  --without-*)
-    what=${a#--without-}
+  --disable-*)
+    what=${a#--disable-}
     what=$(echo "$what" | tr +. x_)
     eval avoid_$what=1
   ;;
