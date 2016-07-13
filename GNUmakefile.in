@@ -92,6 +92,7 @@ configured  += Makefile
 configured  += build-c
 configured  += build-cpp
 configured  += build-hs
+configured  += build-ls
 configured  += build-nim
 configured  += mkexe
 
