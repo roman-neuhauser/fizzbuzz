@@ -43,6 +43,7 @@ endif
 
 ifdef GHC
 impls += haskell/trivial
+impls += haskell/ops
 endif
 
 ifdef LSC

@@ -13,8 +13,7 @@ main = do
   mapM_ (putStrLn . fizzbuzz) [1 .. 100]
   where
     fizzbuzz n
-      | 15 `divides` n = "FizzBuzz"
-      |  3 `divides` n = "Fizz"
-      |  5 `divides` n = "Buzz"
-      | otherwise      = show n
-    divides d n = 0 == n `mod` d
+      | n `mod` 15 == 0 = "FizzBuzz"
+      | n `mod`  3 == 0 = "Fizz"
+      | n `mod`  5 == 0 = "Buzz"
+      | otherwise       = show n
