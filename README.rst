@@ -62,6 +62,11 @@ Haskell
 
 Expects ghc, tested using 8.x.
 
+JavaScript
+**********
+
+Implementations rely on ES6 features.  Tested with node-6.3.0 or newer.
+
 LiveScript
 **********
 

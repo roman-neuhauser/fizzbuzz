@@ -4,6 +4,7 @@ EXECLINEB = @EXECLINEB@
 GHC       = @GHC@
 LSC       = @LSC@
 NIM       = @NIM@
+NODEJS    = @NODEJS@
 PERL5     = @PERL5@
 PERL6     = @PERL6@
 PHP       = @PHP@
@@ -35,6 +36,12 @@ impls += cpp/fun
 impls += cpp/irange
 impls += cpp/trivial
 impls += cpp/tts
+endif
+
+ifdef NODEJS
+impls += es6/trivial
+impls += es6/match
+impls += es6/fp
 endif
 
 ifdef EXECLINEB
@@ -119,6 +126,9 @@ $(filter haskell/%,$(impls)): %: build-hs %.hs
 
 $(filter nim/%,$(impls)): %: build-nim %.nim
 	sh $^ $@
+
+$(filter es6/%,$(impls)): %: mkexe %.js
+	sh $^ $@ $(NODEJS)
 
 $(filter execline/%,$(impls)): %: mkexe %.xl
 	sh $^ $@ $(EXECLINEB)
