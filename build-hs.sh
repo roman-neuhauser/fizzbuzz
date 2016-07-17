@@ -1,6 +1,6 @@
 source=$1
 target=$2
-outdir=$(dirname $target)
+outdir=$target.files
 
 : ${GHC:=@GHC@}
 : ${GHCFLAGS:=@GHCFLAGS@}
