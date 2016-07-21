@@ -27,6 +27,8 @@ populate() # {{{
     -e "s@LDFLAGS@$LDFLAGSg" \
     -e "s@LDLIBS@$LDLIBSg" \
     \
+    -e "s@ESCRIPT@$ESCRIPTg" \
+    \
     -e "s@EXECLINEB@$EXECLINEBg" \
     \
     -e "s@GHC@$GHCg" \
@@ -180,6 +182,7 @@ testfor tool rst2html RST2HTML  rst2html5
 
 testfor lang C        CC        cc
 testfor lang C++      CXX       c++
+testfor lang Erlang   ESCRIPT   escript
 testfor lang Execline EXECLINEB execlineb
 testfor lang Haskell  GHC       ghc
 testfor lang LiveScript LSC     lsc

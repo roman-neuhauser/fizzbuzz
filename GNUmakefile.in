@@ -1,5 +1,6 @@
 CC        = @CC@
 CXX       = @CXX@
+ESCRIPT   = @ESCRIPT@
 EXECLINEB = @EXECLINEB@
 GHC       = @GHC@
 LSC       = @LSC@
@@ -42,6 +43,11 @@ ifdef NODEJS
 impls += es6/trivial
 impls += es6/match
 impls += es6/fp
+endif
+
+ifdef ESCRIPT
+impls += erlang/trivial
+impls += erlang/guards
 endif
 
 ifdef EXECLINEB
@@ -129,6 +135,9 @@ $(filter nim/%,$(impls)): %: build-nim %.nim
 
 $(filter es6/%,$(impls)): %: mkexe %.js
 	sh $^ $@ $(NODEJS)
+
+$(filter erlang/%,$(impls)): %: mkexe %.erl
+	sh $^ $@ $(ESCRIPT)
 
 $(filter execline/%,$(impls)): %: mkexe %.xl
 	sh $^ $@ $(EXECLINEB)

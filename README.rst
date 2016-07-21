@@ -57,6 +57,11 @@ And configure the build system for it::
 
   % ./configure CXX=/usr/local/bin/c++6 LDFLAGS=-Wl,-rpath=/usr/local/lib/gcc6
 
+Erlang
+******
+
+Works for me in ``Erlang/OTP 19 [erts-8.0]``.
+
 Haskell
 *******
 
