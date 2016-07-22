@@ -43,6 +43,9 @@ populate() # {{{
     -e "s@NODEJS@$NODEJSg" \
     -e "s@NODEJSFLAGS@$NODEJSFLAGSg" \
     \
+    -e "s@OCAMLC@$OCAMLCg" \
+    -e "s@OCAMLCFLAGS@$OCAMLCFLAGSg" \
+    \
     -e "s@PERL5@$PERL5g" \
     -e "s@PERL6@$PERL6g" \
     -e "s@PHP@$PHPg" \
@@ -120,6 +123,7 @@ NIMFLAGS="--warnings:on"
 GHCFLAGS=-Wall
 LSCFLAGS=
 NODEJSFLAGS=
+OCAMLCFLAGS=
 LDFLAGS=
 LDLIBS=
 
@@ -188,6 +192,7 @@ testfor lang Haskell  GHC       ghc
 testfor lang LiveScript LSC     lsc
 testfor lang Nim      NIM       nim
 testfor lang Node.js  NODEJS    node
+testfor lang OCaml    OCAMLC    ocamlopt
 testfor lang Perl5    PERL5     perl
 testfor lang Perl6    PERL6     perl6
 testfor lang PHP      PHP       php
@@ -203,6 +208,7 @@ populate $rootdir/build-c.sh build-c
 populate $rootdir/build-cpp.sh build-cpp
 populate $rootdir/build-hs.sh build-hs
 populate $rootdir/build-ls.sh build-ls
+populate $rootdir/build-ml.sh build-ml
 populate $rootdir/build-nim.sh build-nim
 populate $rootdir/mkexe.sh mkexe
 populate $rootdir/GNUmakefile.in GNUmakefile

@@ -6,6 +6,7 @@ GHC       = @GHC@
 LSC       = @LSC@
 NIM       = @NIM@
 NODEJS    = @NODEJS@
+OCAMLC    = @OCAMLC@
 PERL5     = @PERL5@
 PERL6     = @PERL6@
 PHP       = @PHP@
@@ -68,6 +69,10 @@ ifdef NIM
 impls += nim/trivial
 endif
 
+ifdef OCAMLC
+impls += ocaml/trivial
+endif
+
 ifdef PERL5
 impls += perl5/trivial
 endif
@@ -107,6 +112,7 @@ configured  += build-c
 configured  += build-cpp
 configured  += build-hs
 configured  += build-ls
+configured  += build-ml
 configured  += build-nim
 configured  += mkexe
 
@@ -141,6 +147,9 @@ $(filter erlang/%,$(impls)): %: mkexe %.erl
 
 $(filter execline/%,$(impls)): %: mkexe %.xl
 	sh $^ $@ $(EXECLINEB)
+
+$(filter ocaml/%,$(impls)): %: build-ml %.ml
+	sh $^ $@
 
 $(filter livescript/%,$(impls)): %: build-ls %.ls
 	sh $^ $@

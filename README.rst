@@ -82,6 +82,11 @@ Nim
 
 Works for me in Nim 0.11.x and 0.14.x.
 
+OCaml
+*****
+
+Works for me with OCaml 4.02.3 or newer.
+
 Perl5
 *****
 
