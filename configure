@@ -40,6 +40,9 @@ populate() # {{{
     -e "s@LSC@$LSCg" \
     -e "s@LSCFLAGS@$LSCFLAGSg" \
     \
+    -e "s@LUA@$LUAg" \
+    -e "s@LUAFLAGS@$LUAFLAGSg" \
+    \
     -e "s@NODEJS@$NODEJSg" \
     -e "s@NODEJSFLAGS@$NODEJSFLAGSg" \
     \
@@ -122,6 +125,7 @@ CPPFLAGS="-D_ISOC99_SOURCE"
 NIMFLAGS="--warnings:on"
 GHCFLAGS=-Wall
 LSCFLAGS=
+LUAFLAGS=
 NODEJSFLAGS=
 OCAMLCFLAGS=
 LDFLAGS=
@@ -190,6 +194,7 @@ testfor lang Erlang   ESCRIPT   escript
 testfor lang Execline EXECLINEB execlineb
 testfor lang Haskell  GHC       ghc
 testfor lang LiveScript LSC     lsc
+testfor lang Lua      LUA       lua
 testfor lang Nim      NIM       nim
 testfor lang Node.js  NODEJS    node
 testfor lang OCaml    OCAMLC    ocamlopt

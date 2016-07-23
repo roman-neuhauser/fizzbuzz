@@ -4,6 +4,7 @@ ESCRIPT   = @ESCRIPT@
 EXECLINEB = @EXECLINEB@
 GHC       = @GHC@
 LSC       = @LSC@
+LUA       = @LUA@
 NIM       = @NIM@
 NODEJS    = @NODEJS@
 OCAMLC    = @OCAMLC@
@@ -63,6 +64,10 @@ endif
 ifdef LSC
 impls += livescript/trivial
 impls += livescript/pipeline
+endif
+
+ifdef LUA
+impls += lua/trivial
 endif
 
 ifdef NIM
@@ -153,6 +158,9 @@ $(filter ocaml/%,$(impls)): %: build-ml %.ml
 
 $(filter livescript/%,$(impls)): %: build-ls %.ls
 	sh $^ $@
+
+$(filter lua/%,$(impls)): %: mkexe %.lua
+	sh $^ $@ $(LUA)
 
 $(filter perl5/%,$(impls)): %: mkexe %.pl
 	sh $^ $@ $(PERL5)
