@@ -34,6 +34,10 @@ populate() # {{{
     -e "s@GHC@$GHCg" \
     -e "s@GHCFLAGS@$GHCFLAGSg" \
     \
+    -e "s@NEKOC@$NEKOCg" \
+    -e "s@NEKOCFLAGS@$NEKOCFLAGSg" \
+    -e "s@NEKOTOOLS@$NEKOTOOLSg" \
+    \
     -e "s@NIM@$NIMg" \
     -e "s@NIMFLAGS@$NIMFLAGSg" \
     \
@@ -126,6 +130,7 @@ NIMFLAGS="--warnings:on"
 GHCFLAGS=-Wall
 LSCFLAGS=
 LUAFLAGS=
+NEKOCFLAGS=
 NODEJSFLAGS=
 OCAMLCFLAGS=
 LDFLAGS=
@@ -195,6 +200,8 @@ testfor lang Execline EXECLINEB execlineb
 testfor lang Haskell  GHC       ghc
 testfor lang LiveScript LSC     lsc
 testfor lang Lua      LUA       lua
+testfor lang Neko     NEKOC     nekoc
+testfor lang Neko     NEKOTOOLS nekotools
 testfor lang Nim      NIM       nim
 testfor lang Node.js  NODEJS    node
 testfor lang OCaml    OCAMLC    ocamlopt
@@ -214,6 +221,7 @@ populate $rootdir/build-cpp.sh build-cpp
 populate $rootdir/build-hs.sh build-hs
 populate $rootdir/build-ls.sh build-ls
 populate $rootdir/build-ml.sh build-ml
+populate $rootdir/build-neko.sh build-neko
 populate $rootdir/build-nim.sh build-nim
 populate $rootdir/mkexe.sh mkexe
 populate $rootdir/GNUmakefile.in GNUmakefile

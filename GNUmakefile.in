@@ -5,6 +5,7 @@ EXECLINEB = @EXECLINEB@
 GHC       = @GHC@
 LSC       = @LSC@
 LUA       = @LUA@
+NEKOC     = @NEKOC@
 NIM       = @NIM@
 NODEJS    = @NODEJS@
 OCAMLC    = @OCAMLC@
@@ -68,6 +69,10 @@ endif
 
 ifdef LUA
 impls += lua/trivial
+endif
+
+ifdef NEKOC
+impls += neko/trivial
 endif
 
 ifdef NIM
@@ -152,6 +157,9 @@ $(filter erlang/%,$(impls)): %: mkexe %.erl
 
 $(filter execline/%,$(impls)): %: mkexe %.xl
 	sh $^ $@ $(EXECLINEB)
+
+$(filter neko/%,$(impls)): %: build-neko %.neko
+	sh $^ $@
 
 $(filter ocaml/%,$(impls)): %: build-ml %.ml
 	sh $^ $@
