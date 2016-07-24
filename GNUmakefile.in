@@ -108,6 +108,7 @@ impls += ruby/trivial
 endif
 
 ifdef VALAC
+impls += genie/trivial
 impls += vala/trivial
 endif
 
@@ -147,6 +148,9 @@ $(filter c/%,$(impls)): %: build-c %.c
 	sh $^ $@
 
 $(filter cpp/%,$(impls)): %: build-cpp %.cpp
+	sh $^ $@
+
+$(filter genie/%,$(impls)): %: build-vala %.gs
 	sh $^ $@
 
 $(filter haskell/%,$(impls)): %: build-hs %.hs
