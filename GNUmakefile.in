@@ -14,6 +14,7 @@ PERL5     = @PERL5@
 PERL6     = @PERL6@
 PHP       = @PHP@
 PYTHON    = @PYTHON@
+RACKET    = @RACKET@
 RUBY      = @RUBY@
 VALAC     = @VALAC@
 ZSH       = @ZSH@
@@ -104,6 +105,10 @@ endif
 
 ifdef PYTHON
 impls += python/trivial
+endif
+
+ifdef RACKET
+impls += racket/trivial
 endif
 
 ifdef RUBY
@@ -200,6 +205,9 @@ $(filter php/%,$(impls)): %: mkexe %.php
 
 $(filter python/%,$(impls)): %: mkexe %.py
 	sh $^ $@ $(PYTHON)
+
+$(filter racket/%,$(impls)): %: mkexe %.rkt
+	sh $^ $@ $(RACKET)
 
 $(filter ruby/%,$(impls)): %: mkexe %.rb
 	sh $^ $@ $(RUBY)

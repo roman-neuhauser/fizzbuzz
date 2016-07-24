@@ -59,6 +59,7 @@ populate() # {{{
     -e "s@PERL6@$PERL6g" \
     -e "s@PHP@$PHPg" \
     -e "s@PYTHON@$PYTHONg" \
+    -e "s@RACKET@$RACKETg" \
     -e "s@RUBY@$RUBYg" \
     -e "s@ZSH@$ZSHg" \
     \
@@ -218,6 +219,7 @@ testfor lang Perl5    PERL5     perl
 testfor lang Perl6    PERL6     perl6
 testfor lang PHP      PHP       php
 testfor lang Python   PYTHON    python
+testfor lang Racket   RACKET    racket
 testfor lang Ruby     RUBY      ruby
 testfor lang Vala     VALAC     valac
 testfor lang Zsh      ZSH       zsh
