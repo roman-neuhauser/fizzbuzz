@@ -4,6 +4,7 @@ DC        = @DC@
 ESCRIPT   = @ESCRIPT@
 EXECLINEB = @EXECLINEB@
 GHC       = @GHC@
+GUILE     = @GUILE@
 LSC       = @LSC@
 LUA       = @LUA@
 NEKOC     = @NEKOC@
@@ -62,6 +63,10 @@ endif
 
 ifdef EXECLINEB
 impls += execline/trivial
+endif
+
+ifdef GUILE
+impls += guile/trivial
 endif
 
 ifdef GHC
@@ -181,6 +186,9 @@ $(filter erlang/%,$(impls)): %: mkexe %.erl
 
 $(filter execline/%,$(impls)): %: mkexe %.xl
 	sh $^ $@ $(EXECLINEB)
+
+$(filter guile/%,$(impls)): %: mkexe %.scm
+	sh $^ $@ $(GUILE)
 
 $(filter neko/%,$(impls)): %: build-neko %.neko
 	sh $^ $@

@@ -36,6 +36,8 @@ populate() # {{{
     -e "s@GHC@$GHCg" \
     -e "s@GHCFLAGS@$GHCFLAGSg" \
     \
+    -e "s@GUILE@$GUILEg" \
+    \
     -e "s@NEKOC@$NEKOCg" \
     -e "s@NEKOCFLAGS@$NEKOCFLAGSg" \
     -e "s@NEKOTOOLS@$NEKOTOOLSg" \
@@ -207,6 +209,7 @@ testfor lang C++      CXX       c++
 testfor lang D        DC        gdc
 testfor lang Erlang   ESCRIPT   escript
 testfor lang Execline EXECLINEB execlineb
+testfor lang Scheme   GUILE     guile
 testfor lang Haskell  GHC       ghc
 testfor lang LiveScript LSC     lsc
 testfor lang Lua      LUA       lua
