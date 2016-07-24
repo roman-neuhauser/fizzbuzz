@@ -21,6 +21,8 @@ populate() # {{{
     -e "s@CPPFLAGS@$CPPFLAGSg" \
     -e "s@CXX@$CXXg" \
     -e "s@CXXFLAGS@$CXXFLAGSg" \
+    -e "s@DC@$DCg" \
+    -e "s@DCFLAGS@$DCFLAGSg" \
     \
     -e "s@HAVE_BSD_STRING_H@$HAVE_BSD_STRING_Hg" \
     \
@@ -130,6 +132,7 @@ RST2HTMLFLAGS="--strict"
 CFLAGS="-Wall -Wextra"
 CXXFLAGS="-Wall -Wextra -std=c++14"
 CPPFLAGS="-D_ISOC99_SOURCE"
+DCFLAGS=
 NIMFLAGS="--warnings:on"
 GHCFLAGS=-Wall
 LSCFLAGS=
@@ -200,6 +203,7 @@ testfor tool rst2html RST2HTML  rst2html5
 
 testfor lang C        CC        cc
 testfor lang C++      CXX       c++
+testfor lang D        DC        gdc
 testfor lang Erlang   ESCRIPT   escript
 testfor lang Execline EXECLINEB execlineb
 testfor lang Haskell  GHC       ghc
@@ -224,6 +228,7 @@ echo
 
 populate $rootdir/build-c.sh build-c
 populate $rootdir/build-cpp.sh build-cpp
+populate $rootdir/build-d.sh build-d
 populate $rootdir/build-hs.sh build-hs
 populate $rootdir/build-ls.sh build-ls
 populate $rootdir/build-ml.sh build-ml

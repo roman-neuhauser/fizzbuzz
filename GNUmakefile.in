@@ -1,5 +1,6 @@
 CC        = @CC@
 CXX       = @CXX@
+DC        = @DC@
 ESCRIPT   = @ESCRIPT@
 EXECLINEB = @EXECLINEB@
 GHC       = @GHC@
@@ -41,6 +42,10 @@ impls += cpp/fun
 impls += cpp/irange
 impls += cpp/trivial
 impls += cpp/tts
+endif
+
+ifdef DC
+impls += d/trivial
 endif
 
 ifdef NODEJS
@@ -126,6 +131,7 @@ configured  += GNUmakefile
 configured  += Makefile
 configured  += build-c
 configured  += build-cpp
+configured  += build-d
 configured  += build-hs
 configured  += build-ls
 configured  += build-ml
@@ -148,6 +154,9 @@ $(filter c/%,$(impls)): %: build-c %.c
 	sh $^ $@
 
 $(filter cpp/%,$(impls)): %: build-cpp %.cpp
+	sh $^ $@
+
+$(filter d/%,$(impls)): %: build-d %.d
 	sh $^ $@
 
 $(filter genie/%,$(impls)): %: build-vala %.gs
