@@ -1,0 +1,19 @@
+#!/usr/bin/icon
+
+# my impression of Icon is: finally something different[*]
+# i've seen Icon mentioned as a language influence every
+# now and then but never ran the interpreter before.
+# turned out to be a mixed bag: generators are really
+# interesting, the keyword-based syntax is too verbose.
+#
+# [*] not obvious from this piece of code but see case.icn
+
+procedure main()
+  local i
+  every i := 1 to 100 do write(
+    if i % 15 = 0 then "FizzBuzz" else
+    if i % 3  = 0 then "Fizz"     else
+    if i % 5  = 0 then "Buzz"     else
+    i
+  )
+end

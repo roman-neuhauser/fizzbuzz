@@ -5,6 +5,7 @@ ESCRIPT   = @ESCRIPT@
 EXECLINEB = @EXECLINEB@
 GHC       = @GHC@
 GUILE     = @GUILE@
+ICON      = @ICON@
 LSC       = @LSC@
 LUA       = @LUA@
 NEKOC     = @NEKOC@
@@ -72,6 +73,11 @@ endif
 ifdef GHC
 impls += haskell/trivial
 impls += haskell/ops
+endif
+
+ifdef ICON
+impls += icon/trivial
+impls += icon/case
 endif
 
 ifdef LSC
@@ -189,6 +195,9 @@ $(filter execline/%,$(impls)): %: mkexe %.xl
 
 $(filter guile/%,$(impls)): %: mkexe %.scm
 	sh $^ $@ $(GUILE)
+
+$(filter icon/%,$(impls)): %: mkexe %.icn
+	sh $^ $@ $(ICON)
 
 $(filter neko/%,$(impls)): %: build-neko %.neko
 	sh $^ $@

@@ -1,0 +1,18 @@
+#!/usr/bin/icon
+
+# this should demonstrate some of Icon's capabilities
+# better than trivial.icn; i still can't get over the
+# verbose "procedure" / "end" syntax.
+
+procedure main()
+  every write(fizzbuzz(1 to 100))
+end
+
+procedure fizzbuzz(i)
+  return case 0 of {
+    i % 15 : "FizzBuzz"
+    i %  3 : "Fizz"
+    i %  5 : "Buzz"
+    default: i
+  }
+end

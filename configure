@@ -38,6 +38,8 @@ populate() # {{{
     \
     -e "s@GUILE@$GUILEg" \
     \
+    -e "s@ICON@$ICONg" \
+    \
     -e "s@NEKOC@$NEKOCg" \
     -e "s@NEKOCFLAGS@$NEKOCFLAGSg" \
     -e "s@NEKOTOOLS@$NEKOTOOLSg" \
@@ -211,6 +213,7 @@ testfor lang Erlang   ESCRIPT   escript
 testfor lang Execline EXECLINEB execlineb
 testfor lang Scheme   GUILE     guile
 testfor lang Haskell  GHC       ghc
+testfor lang Icon     ICON      icon
 testfor lang LiveScript LSC     lsc
 testfor lang Lua      LUA       lua
 testfor lang Neko     NEKOC     nekoc
