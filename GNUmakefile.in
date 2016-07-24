@@ -14,6 +14,7 @@ PERL6     = @PERL6@
 PHP       = @PHP@
 PYTHON    = @PYTHON@
 RUBY      = @RUBY@
+VALAC     = @VALAC@
 ZSH       = @ZSH@
 
 RST2HTML = @RST2HTML@
@@ -106,6 +107,10 @@ impls += ruby/monkey
 impls += ruby/trivial
 endif
 
+ifdef VALAC
+impls += vala/trivial
+endif
+
 ifdef ZSH
 impls += zsh/patmat
 impls += zsh/trivial
@@ -124,6 +129,7 @@ configured  += build-hs
 configured  += build-ls
 configured  += build-ml
 configured  += build-nim
+configured  += build-vala
 configured  += mkexe
 
 .PHONY: all
@@ -184,6 +190,9 @@ $(filter python/%,$(impls)): %: mkexe %.py
 
 $(filter ruby/%,$(impls)): %: mkexe %.rb
 	sh $^ $@ $(RUBY)
+
+$(filter vala/%,$(impls)): %: build-vala %.vala
+	sh $^ $@
 
 $(filter zsh/%,$(impls)): %: mkexe %.zsh
 	sh $^ $@ $(ZSH)

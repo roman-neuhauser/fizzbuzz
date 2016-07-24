@@ -59,6 +59,10 @@ populate() # {{{
     -e "s@PYTHON@$PYTHONg" \
     -e "s@RUBY@$RUBYg" \
     -e "s@ZSH@$ZSHg" \
+    \
+    -e "s@VALAC@$VALACg" \
+    -e "s@VALACFLAGS@$VALACFLAGSg" \
+    \
     $1 \
   > $2
   report "created file" $2
@@ -135,6 +139,7 @@ NODEJSFLAGS=
 OCAMLCFLAGS=
 LDFLAGS=
 LDLIBS=
+VALACFLAGS=
 
 HAVE_BSD_STRING_H=
 
@@ -210,6 +215,7 @@ testfor lang Perl6    PERL6     perl6
 testfor lang PHP      PHP       php
 testfor lang Python   PYTHON    python
 testfor lang Ruby     RUBY      ruby
+testfor lang Vala     VALAC     valac
 testfor lang Zsh      ZSH       zsh
 
 test $help_requested -eq 0 || exit
@@ -223,6 +229,7 @@ populate $rootdir/build-ls.sh build-ls
 populate $rootdir/build-ml.sh build-ml
 populate $rootdir/build-neko.sh build-neko
 populate $rootdir/build-nim.sh build-nim
+populate $rootdir/build-vala.sh build-vala
 populate $rootdir/mkexe.sh mkexe
 populate $rootdir/GNUmakefile.in GNUmakefile
 
