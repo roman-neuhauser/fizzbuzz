@@ -49,6 +49,7 @@ endif
 
 ifdef DC
 impls += d/trivial
+impls += d/algo
 endif
 
 ifdef NODEJS
