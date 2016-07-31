@@ -157,6 +157,18 @@ $(filter ocaml/%,$(impls)): %: build-ml %.ml
 	sh $^ $@
 endif
 
+SWIFTC = @SWIFTC@
+
+ifdef SWIFTC
+impls += swift/trivial
+impls += swift/patmat
+
+configured += build-swift
+
+$(filter swift/%,$(impls)): %: build-swift %.swift
+	sh $^ $@
+endif
+
 ifdef VALAC
 impls += vala/trivial
 

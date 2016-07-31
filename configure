@@ -62,6 +62,9 @@ populate() # {{{
     -e "s@OCAMLC@$OCAMLCg" \
     -e "s@OCAMLCFLAGS@$OCAMLCFLAGSg" \
     \
+    -e "s@SWIFTC@$SWIFTCg" \
+    -e "s@SWIFTCFLAGS@$SWIFTCFLAGSg" \
+    \
     -e "s@PERL5@$PERL5g" \
     -e "s@PERL6@$PERL6g" \
     -e "s@PHP@$PHPg" \
@@ -148,6 +151,7 @@ LSCFLAGS=
 LUAFLAGS=
 NEKOCFLAGS=
 NODEJSFLAGS=
+SWIFTCFLAGS=
 OCAMLCFLAGS=
 LDFLAGS=
 LDLIBS=
@@ -232,6 +236,7 @@ testfor lang PHP      PHP       php
 testfor lang Python   PYTHON    python
 testfor lang Racket   RACKET    racket
 testfor lang Ruby     RUBY      ruby
+testfor lang Swift    SWIFTC    swiftc
 testfor lang Vala     VALAC     valac
 testfor lang Zsh      ZSH       zsh
 
@@ -248,6 +253,7 @@ populate $rootdir/build-ls.sh build-ls
 populate $rootdir/build-ml.sh build-ml
 populate $rootdir/build-neko.sh build-neko
 populate $rootdir/build-nim.sh build-nim
+populate $rootdir/build-swift.sh build-swift
 populate $rootdir/build-vala.sh build-vala
 populate $rootdir/mkexe.sh mkexe
 populate $rootdir/GNUmakefile.in GNUmakefile
