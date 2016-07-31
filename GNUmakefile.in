@@ -1,26 +1,3 @@
-CC        = @CC@
-CXX       = @CXX@
-DC        = @DC@
-ESCRIPT   = @ESCRIPT@
-EXECLINEB = @EXECLINEB@
-GHC       = @GHC@
-GUILE     = @GUILE@
-ICON      = @ICON@
-LSC       = @LSC@
-LUA       = @LUA@
-NEKOC     = @NEKOC@
-NIM       = @NIM@
-NODEJS    = @NODEJS@
-OCAMLC    = @OCAMLC@
-PERL5     = @PERL5@
-PERL6     = @PERL6@
-PHP       = @PHP@
-PYTHON    = @PYTHON@
-RACKET    = @RACKET@
-RUBY      = @RUBY@
-VALAC     = @VALAC@
-ZSH       = @ZSH@
-
 RST2HTML = @RST2HTML@
 RST2HTMLFLAGS = @RST2HTMLFLAGS@
 
@@ -30,134 +7,15 @@ VPATH = @VPATH@
 
 impls  =
 
-ifdef CC
-impls += c/piecemeal
-impls += c/snprintf
-impls += c/strlcat
-impls += c/tblrot
-impls += c/tblrot2
-impls += c/ternaries
-impls += c/trivial
-endif
-
-ifdef CXX
-impls += cpp/fun
-impls += cpp/irange
-impls += cpp/trivial
-impls += cpp/tts
-endif
-
-ifdef DC
-impls += d/trivial
-impls += d/algo
-endif
-
-ifdef NODEJS
-impls += es6/trivial
-impls += es6/match
-impls += es6/fp
-endif
-
-ifdef ESCRIPT
-impls += erlang/trivial
-impls += erlang/guards
-endif
-
-ifdef EXECLINEB
-impls += execline/trivial
-endif
-
-ifdef GUILE
-impls += guile/trivial
-endif
-
-ifdef GHC
-impls += haskell/trivial
-impls += haskell/ops
-endif
-
-ifdef ICON
-impls += icon/trivial
-impls += icon/case
-endif
-
-ifdef LSC
-impls += livescript/trivial
-impls += livescript/pipeline
-endif
-
-ifdef LUA
-impls += lua/trivial
-endif
-
-ifdef NEKOC
-impls += neko/trivial
-endif
-
-ifdef NIM
-impls += nim/trivial
-endif
-
-ifdef OCAMLC
-impls += ocaml/trivial
-endif
-
-ifdef PERL5
-impls += perl5/trivial
-endif
-
-ifdef PERL6
-impls += perl6/given
-impls += perl6/trivial
-endif
-
-ifdef PHP
-impls += php/trivial
-endif
-
-ifdef PYTHON
-impls += python/trivial
-endif
-
-ifdef RACKET
-impls += racket/trivial
-endif
-
-ifdef RUBY
-impls += ruby/case
-impls += ruby/monkey
-impls += ruby/trivial
-endif
-
-ifdef VALAC
-impls += genie/trivial
-impls += vala/trivial
-endif
-
-ifdef ZSH
-impls += zsh/patmat
-impls += zsh/trivial
-endif
-
 crud   =
-crud  += */*.o
-crud  += haskell/*.hi
 
 configured   =
 configured  += GNUmakefile
 configured  += Makefile
-configured  += build-c
-configured  += build-cpp
-configured  += build-d
-configured  += build-hs
-configured  += build-ls
-configured  += build-ml
-configured  += build-nim
-configured  += build-vala
 configured  += mkexe
 
 .PHONY: all
-all: $(impls)
+all: .all
 
 ifdef HAVE_BSD_STRING_H
 c/strlcat: LDLIBS = -lbsd
@@ -167,75 +25,264 @@ endif
 
 % : %.sh
 
+# AOT-compiled things
+
+CC = @CC@
+
+ifdef CC
+impls += c/piecemeal
+impls += c/snprintf
+impls += c/strlcat
+impls += c/tblrot
+impls += c/tblrot2
+impls += c/ternaries
+impls += c/trivial
+
+configured += build-c
+
 $(filter c/%,$(impls)): %: build-c %.c
 	sh $^ $@
+endif
+
+CXX = @CXX@
+
+ifdef CXX
+impls += cpp/fun
+impls += cpp/irange
+impls += cpp/trivial
+impls += cpp/tts
+
+configured += build-cpp
 
 $(filter cpp/%,$(impls)): %: build-cpp %.cpp
 	sh $^ $@
+endif
+
+DC = @DC@
+
+ifdef DC
+impls += d/trivial
+impls += d/algo
+
+configured += build-d
 
 $(filter d/%,$(impls)): %: build-d %.d
 	sh $^ $@
+endif
+
+VALAC = @VALAC@
+
+ifdef VALAC
+impls += genie/trivial
+
+configured += build-vala
 
 $(filter genie/%,$(impls)): %: build-vala %.gs
 	sh $^ $@
+endif
+
+GHC = @GHC@
+
+ifdef GHC
+impls += haskell/trivial
+impls += haskell/ops
+
+crud  += haskell/*.files/*
+
+configured += build-hs
 
 $(filter haskell/%,$(impls)): %: build-hs %.hs
 	sh $^ $@
+endif
 
-$(filter nim/%,$(impls)): %: build-nim %.nim
-	sh $^ $@
+LSC = @LSC@
 
-$(filter es6/%,$(impls)): %: mkexe %.js
-	sh $^ $@ $(NODEJS)
+ifdef LSC
+impls += livescript/trivial
+impls += livescript/pipeline
 
-$(filter erlang/%,$(impls)): %: mkexe %.erl
-	sh $^ $@ $(ESCRIPT)
-
-$(filter execline/%,$(impls)): %: mkexe %.xl
-	sh $^ $@ $(EXECLINEB)
-
-$(filter guile/%,$(impls)): %: mkexe %.scm
-	sh $^ $@ $(GUILE)
-
-$(filter icon/%,$(impls)): %: mkexe %.icn
-	sh $^ $@ $(ICON)
-
-$(filter neko/%,$(impls)): %: build-neko %.neko
-	sh $^ $@
-
-$(filter ocaml/%,$(impls)): %: build-ml %.ml
-	sh $^ $@
+configured += build-ls
 
 $(filter livescript/%,$(impls)): %: build-ls %.ls
 	sh $^ $@
+endif
 
-$(filter lua/%,$(impls)): %: mkexe %.lua
-	sh $^ $@ $(LUA)
+NEKOC = @NEKOC@
 
-$(filter perl5/%,$(impls)): %: mkexe %.pl
-	sh $^ $@ $(PERL5)
+ifdef NEKOC
+impls += neko/trivial
 
-$(filter perl6/%,$(impls)): %: mkexe %.pl
-	sh $^ $@ $(PERL6)
+crud += neko/*.n
 
-$(filter php/%,$(impls)): %: mkexe %.php
-	sh $^ $@ $(PHP)
+configured += build-neko
 
-$(filter python/%,$(impls)): %: mkexe %.py
-	sh $^ $@ $(PYTHON)
+$(filter neko/%,$(impls)): %: build-neko %.neko
+	sh $^ $@
+endif
 
-$(filter racket/%,$(impls)): %: mkexe %.rkt
-	sh $^ $@ $(RACKET)
+NIM = @NIM@
 
-$(filter ruby/%,$(impls)): %: mkexe %.rb
-	sh $^ $@ $(RUBY)
+ifdef NIM
+impls += nim/trivial
+
+crud += nim/nimcache/*
+
+configured += build-nim
+
+$(filter nim/%,$(impls)): %: build-nim %.nim
+	sh $^ $@
+endif
+
+OCAMLC = @OCAMLC@
+
+ifdef OCAMLC
+impls += ocaml/trivial
+
+configured += build-ml
+
+$(filter ocaml/%,$(impls)): %: build-ml %.ml
+	sh $^ $@
+endif
+
+ifdef VALAC
+impls += vala/trivial
+
+configured += build-vala
 
 $(filter vala/%,$(impls)): %: build-vala %.vala
 	sh $^ $@
+endif
+
+# interpreted stuff
+
+ESCRIPT = @ESCRIPT@
+
+ifdef ESCRIPT
+impls += erlang/trivial
+impls += erlang/guards
+
+$(filter erlang/%,$(impls)): %: mkexe %.erl
+	sh $^ $@ $(ESCRIPT)
+endif
+
+NODEJS = @NODEJS@
+
+ifdef NODEJS
+impls += es6/trivial
+impls += es6/match
+impls += es6/fp
+
+$(filter es6/%,$(impls)): %: mkexe %.js
+	sh $^ $@ $(NODEJS)
+endif
+
+EXECLINEB = @EXECLINEB@
+
+ifdef EXECLINEB
+impls += execline/trivial
+
+$(filter execline/%,$(impls)): %: mkexe %.xl
+	sh $^ $@ $(EXECLINEB)
+endif
+
+GUILE = @GUILE@
+
+ifdef GUILE
+impls += guile/trivial
+
+$(filter guile/%,$(impls)): %: mkexe %.scm
+	sh $^ $@ $(GUILE)
+endif
+
+ICON = @ICON@
+
+ifdef ICON
+impls += icon/trivial
+impls += icon/case
+
+$(filter icon/%,$(impls)): %: mkexe %.icn
+	sh $^ $@ $(ICON)
+endif
+
+LUA = @LUA@
+
+ifdef LUA
+impls += lua/trivial
+
+$(filter lua/%,$(impls)): %: mkexe %.lua
+	sh $^ $@ $(LUA)
+endif
+
+PERL5 = @PERL5@
+
+ifdef PERL5
+impls += perl5/trivial
+
+$(filter perl5/%,$(impls)): %: mkexe %.pl
+	sh $^ $@ $(PERL5)
+endif
+
+PERL6 = @PERL6@
+
+ifdef PERL6
+impls += perl6/given
+impls += perl6/trivial
+
+$(filter perl6/%,$(impls)): %: mkexe %.pl
+	sh $^ $@ $(PERL6)
+endif
+
+PHP = @PHP@
+
+ifdef PHP
+impls += php/trivial
+
+$(filter php/%,$(impls)): %: mkexe %.php
+	sh $^ $@ $(PHP)
+endif
+
+PYTHON = @PYTHON@
+
+ifdef PYTHON
+impls += python/trivial
+
+$(filter python/%,$(impls)): %: mkexe %.py
+	sh $^ $@ $(PYTHON)
+endif
+
+RACKET = @RACKET@
+
+ifdef RACKET
+impls += racket/trivial
+
+$(filter racket/%,$(impls)): %: mkexe %.rkt
+	sh $^ $@ $(RACKET)
+endif
+
+RUBY = @RUBY@
+
+ifdef RUBY
+impls += ruby/case
+impls += ruby/monkey
+impls += ruby/trivial
+
+$(filter ruby/%,$(impls)): %: mkexe %.rb
+	sh $^ $@ $(RUBY)
+endif
+
+ZSH = @ZSH@
+
+ifdef ZSH
+impls += zsh/patmat
+impls += zsh/trivial
 
 $(filter zsh/%,$(impls)): %: mkexe %.zsh
 	sh $^ $@ $(ZSH)
+endif
 
+
+.PHONY: .all
+.all: $(sort $(impls))
 
 .PHONY: html
 html: README.html
@@ -255,5 +302,5 @@ realclean: clean
 	$(RM) $(configured)
 
 .PHONY: check
-check: run-tests.sh expected-output $(impls)
-	sh $^
+check: run-tests.sh expected-output $(sort $(impls))
+	@sh $^
