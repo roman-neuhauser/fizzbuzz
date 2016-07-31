@@ -95,6 +95,19 @@ $(filter haskell/%,$(impls)): %: build-hs %.hs
 	sh $^ $@
 endif
 
+IDRIS = @IDRIS@
+
+ifdef IDRIS
+impls += idris/trivial
+
+crud  += idris/*.files/*
+
+configured += build-idr
+
+$(filter idris/%,$(impls)): %: build-idr %.idr
+	sh $^ $@
+endif
+
 LSC = @LSC@
 
 ifdef LSC

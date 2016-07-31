@@ -40,6 +40,9 @@ populate() # {{{
     \
     -e "s@ICON@$ICONg" \
     \
+    -e "s@IDRIS@$IDRISg" \
+    -e "s@IDRISFLAGS@$IDRISFLAGSg" \
+    \
     -e "s@NEKOC@$NEKOCg" \
     -e "s@NEKOCFLAGS@$NEKOCFLAGSg" \
     -e "s@NEKOTOOLS@$NEKOTOOLSg" \
@@ -140,6 +143,7 @@ CPPFLAGS="-D_ISOC99_SOURCE"
 DCFLAGS=
 NIMFLAGS="--warnings:on"
 GHCFLAGS=-Wall
+IDRISFLAGS=
 LSCFLAGS=
 LUAFLAGS=
 NEKOCFLAGS=
@@ -214,6 +218,7 @@ testfor lang Execline EXECLINEB execlineb
 testfor lang Scheme   GUILE     guile
 testfor lang Haskell  GHC       ghc
 testfor lang Icon     ICON      icon
+testfor lang Idris    IDRIS     idris
 testfor lang LiveScript LSC     lsc
 testfor lang Lua      LUA       lua
 testfor lang Neko     NEKOC     nekoc
@@ -238,6 +243,7 @@ populate $rootdir/build-c.sh build-c
 populate $rootdir/build-cpp.sh build-cpp
 populate $rootdir/build-d.sh build-d
 populate $rootdir/build-hs.sh build-hs
+populate $rootdir/build-idr.sh build-idr
 populate $rootdir/build-ls.sh build-ls
 populate $rootdir/build-ml.sh build-ml
 populate $rootdir/build-neko.sh build-neko
