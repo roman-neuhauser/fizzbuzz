@@ -13,7 +13,7 @@ for f in "$@"; do
 done
 
 if test -n "$failed"; then
-  printf -- "\nthese implemantations failed:\n"
+  printf -- "\nthese implementations failed:\n"
   for f in $failed; do
     printf -- "- %s\n  see %s\n  and %s\n" $f $f.output $f.diff
   done
