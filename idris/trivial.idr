@@ -4,8 +4,7 @@
  -}
 
 main : IO ()
-main =
-do
+main = do
   sequence_ $ map (putStrLn . fizzbuzz) [1 .. 100]
 where
   fizzbuzz n =
