@@ -27,6 +27,17 @@ endif
 
 # AOT-compiled things
 
+ATSCC = @ATSCC@
+
+ifdef ATSCC
+impls += ats/trivial
+
+configured += build-ats
+
+$(filter ats/%,$(impls)): %: build-ats %.dats
+	sh $^ $@
+endif
+
 CC = @CC@
 
 ifdef CC

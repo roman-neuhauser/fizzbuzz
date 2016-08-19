@@ -16,6 +16,9 @@ populate() # {{{
     -e "s@RST2HTML@$RST2HTMLg" \
     -e "s@RST2HTMLFLAGS@$RST2HTMLFLAGSg" \
     \
+    -e "s@ATSCC@$ATSCCg" \
+    -e "s@ATSCCFLAGS@$ATSCCFLAGSg" \
+    \
     -e "s@CC@$CCg" \
     -e "s@CFLAGS@$CFLAGSg" \
     -e "s@CPPFLAGS@$CPPFLAGSg" \
@@ -143,6 +146,7 @@ VPATH="$rootdir"
 
 RST2HTMLFLAGS="--strict"
 
+ATSCCFLAGS=
 CFLAGS="-Wall -Wextra"
 CXXFLAGS="-Wall -Wextra -std=c++14"
 CPPFLAGS="-D_ISOC99_SOURCE"
@@ -218,6 +222,7 @@ done # }}}
 
 testfor tool rst2html RST2HTML  rst2html5
 
+testfor lang ATS2     ATSCC     patscc
 testfor lang C        CC        cc
 testfor lang C++      CXX       c++
 testfor lang D        DC        gdc
@@ -249,6 +254,7 @@ test $help_requested -eq 0 || exit
 
 echo
 
+populate $rootdir/build-ats.sh build-ats
 populate $rootdir/build-c.sh build-c
 populate $rootdir/build-cpp.sh build-cpp
 populate $rootdir/build-d.sh build-d
