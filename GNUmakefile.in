@@ -95,6 +95,20 @@ $(filter haskell/%,$(impls)): %: build-hs %.hs
 	sh $^ $@
 endif
 
+HAXE = @HAXE@
+
+ifdef HAXE
+impls += haxe/Trivial
+impls += haxe/Switch
+
+crud  += haxe/*.n
+
+configured += build-hx
+
+$(filter haxe/%,$(impls)): %: build-hx %.hx
+	sh $^ $@
+endif
+
 IDRIS = @IDRIS@
 
 ifdef IDRIS

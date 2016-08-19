@@ -38,6 +38,9 @@ populate() # {{{
     \
     -e "s@GUILE@$GUILEg" \
     \
+    -e "s@HAXE@$HAXEg" \
+    -e "s@HAXEFLAGS@$HAXEFLAGSg" \
+    \
     -e "s@ICON@$ICONg" \
     \
     -e "s@IDRIS@$IDRISg" \
@@ -144,6 +147,7 @@ CFLAGS="-Wall -Wextra"
 CXXFLAGS="-Wall -Wextra -std=c++14"
 CPPFLAGS="-D_ISOC99_SOURCE"
 DCFLAGS=
+HAXEFLAGS=
 NIMFLAGS="--warnings:on"
 GHCFLAGS=-Wall
 IDRISFLAGS=
@@ -221,6 +225,7 @@ testfor lang Erlang   ESCRIPT   escript
 testfor lang Execline EXECLINEB execlineb
 testfor lang Scheme   GUILE     guile
 testfor lang Haskell  GHC       ghc
+testfor lang Haxe     HAXE      haxe
 testfor lang Icon     ICON      icon
 testfor lang Idris    IDRIS     idris
 testfor lang LiveScript LSC     lsc
@@ -248,6 +253,7 @@ populate $rootdir/build-c.sh build-c
 populate $rootdir/build-cpp.sh build-cpp
 populate $rootdir/build-d.sh build-d
 populate $rootdir/build-hs.sh build-hs
+populate $rootdir/build-hx.sh build-hx
 populate $rootdir/build-idr.sh build-idr
 populate $rootdir/build-ls.sh build-ls
 populate $rootdir/build-ml.sh build-ml
